@@ -4,7 +4,7 @@ import { UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
-    <div className="flex h-16 items-center px-4 container mx-auto p-2">
+    <div className="flex h-16 items-center px-4 container mx-auto p-2 w-full">
       <Image
         src="/album.png"
         width="50"
