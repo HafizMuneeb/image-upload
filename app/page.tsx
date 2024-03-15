@@ -1,46 +1,41 @@
-// @ts-nocheck
-"use client"
 
-import { Button } from "@/components/ui/button";
-import { CldImage } from "next-cloudinary";
-import { CldUploadButton } from "next-cloudinary";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import cloudinary from "cloudinary";
+import UploadButton from "./gallery/upload-button";
+import { SearchForm } from "./gallery/search-form";
+import GalleryGrid from "./gallery/gallery-grid";
 
-export type UploadResult = {
-  info: {
-    public_id: string;
-  };
-  event: "success";
+
+export type SearchResult = {
+  public_id: string;
+  tags: string[];
 };
 
-export default function Home() {
-  const [imageId, setImageId] = useState("");
-  const router = useRouter();
-
-  const handleUploadSuccess = (result: UploadResult) => {
-    setImageId(result.info.public_id);
-    router.push("/gallery");
+export default async function GalleryPage({
+  searchParams: { search },
+}: {
+  searchParams: {
+    search: string;
   };
+}) {
+  const results = (await cloudinary.v2.search
+    .expression(`resource_type:image${search ? ` AND tags=${search}` : ""}`)
+    .sort_by("created_at", "desc")
+    .with_field("tags")
+    .max_results(30)
+    .execute()) as { resources: SearchResult[] };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button asChild className="bg-blue-500 text-white hover:bg-blue-300">
-        <CldUploadButton
-          onUpload={handleUploadSuccess} // Use the handleUploadSuccess function
-          uploadPreset="dxytxxfq"
-        />
-      </Button>
+    <section>
+      <div className="flex flex-col gap-8 px-3">
+        <div className="flex justify-between">
+          <h1 className="text-4xl font-bold">Gallery</h1>
+          <UploadButton />
+        </div>
 
-      {imageId && (
-        <CldImage
-          width="500"
-          height="300"
-          src={imageId}
-          sizes="100vw"
-          alt="Description of my image"
-        />
-      )}
-    </main>
+        <SearchForm initialSearch={search} />
+
+        <GalleryGrid images={results.resources} />
+      </div>
+    </section>
   );
 }

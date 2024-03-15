@@ -11,7 +11,7 @@ export default function UploadButton() {
   const router = useRouter();
 
   return (
-    <Button asChild className="bg-white">
+    <Button asChild className="dark:bg-white bg-slate-900">
       <CldUploadButton
         onUpload={(result: UploadResult) => {
           setTimeout(() => {

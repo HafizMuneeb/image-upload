@@ -34,7 +34,7 @@ export default function RootLayout({
           </ThemeProvider>
           <div className="flex">
             <SideMenu />
-            {children}
+            <div className="w-full px-4 pt-8"> {children}</div>
           </div>
         </body>
       </html>
