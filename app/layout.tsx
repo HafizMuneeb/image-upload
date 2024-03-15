@@ -4,7 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 
+
 import { ClerkProvider } from "@clerk/nextjs";
+import { SideMenu } from "@/components/SibebarMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +32,10 @@ export default function RootLayout({
           >
             <Navbar />
           </ThemeProvider>
-          <div className="flex">{children}</div>
+          <div className="flex">
+            <SideMenu />
+            {children}
+          </div>
         </body>
       </html>
     </ClerkProvider>
