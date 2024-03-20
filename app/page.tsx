@@ -113,7 +113,7 @@ export default function Home() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col">
             <label htmlFor="tags" className="text-lg">Tags</label>
             <input
               type="text"
