@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Dark } from "./Dark";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from '@clerk/nextjs';
+import Link from "next/link";
+
 
 const Navbar = async() => {
   const user = await currentUser();
@@ -13,7 +15,9 @@ const Navbar = async() => {
         height="50"
         alt="icon of this photo album app"
       />
-      <h2 className="p-2">Image Gallery</h2>
+      <Link href="/">
+        <h2 className="p-2">Image Gallery</h2>
+      </Link>
       <div className="ml-auto flex items-center space-x-4 pl-3">
         <Dark />
         <UserButton />
