@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { Dark } from "./Dark";
 import { UserButton } from "@clerk/nextjs";
+import { currentUser } from '@clerk/nextjs';
 
-const Navbar = () => {
+const Navbar = async() => {
+  const user = await currentUser();
   return (
     <div className="flex items-center px-4 mx-auto p-2 w-full">
       <Image
@@ -15,6 +17,7 @@ const Navbar = () => {
       <div className="ml-auto flex items-center space-x-4 pl-3">
         <Dark />
         <UserButton />
+        <h2>Welcome {user?.username}</h2>
       </div>
     </div>
   );
